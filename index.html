@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<link rel="stylesheet" href="css/addressBook.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		<script type='text/javascript' src="js/xml2Json.js"></script>		
+		<script type='text/javascript' src="js/myApp.js"></script>
+		<script type='text/javascript' src="js/myCtrl.js"></script>
+	</head>
+	<body>
+		<div ng-app="myApp" ng-controller="myCtrl" class="container-fluid">
+			<h2>Basic Address Book</h2>
+			<ul class="nav nav-pills" style="text-align:center">
+				<li class="active" style="display: inline;"><a data-toggle="pill" href="#table_view">Table View</a></li> |
+				<li style="display: inline;"><a data-toggle="pill" href="#card_view">Card View</a></li>
+			</ul>
+			
+			<button class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Contact</button>
+			<br/>
+			<br/>
+			<div class="tab-content">		
+				<div id="table_view" class="tab-pane fade in active">
+					<table ng-repeat="x in contacts" class="table table-striped">
+						<thead>
+						  <tr>
+							<th>Customer ID</th>
+							<th>Company Name</th>
+							<th>Contact Name</th>
+							<th>Contact Title</th>
+							<th>Address</th>
+							<th>City</th>
+							<th>Email</th>
+							<th>Postal Code</th>
+							<th>Country</th>
+							<th>Phone</th>
+							<th>Fax</th>
+							<th>Delete</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr ng-repeat="y in x.Contact">
+							<td>{{y.CustomerID}}</td>
+							<td>{{y.CompanyName}}</td>
+							<td>{{y.ContactName}}</td>
+							<td>{{y.ContactTitle}}</td>
+							<td>{{y.Address}}</td>
+							<td>{{y.City}}</td>
+							<td>{{y.Email}}</td>
+							<td>{{y.PostalCode}}</td>
+							<td>{{y.Country}}</td>
+							<td>{{y.Phone}}</td>
+							<td>{{y.Fax}}</td>
+							<td align="center"><span style="color:red; font-weight:bold" ng-click="removeItem($index)">X</span></td>
+						  </tr>
+						</tbody>
+					</table>
+				</div>
+			  
+				<div class="card-deck tab-pane fade"" id="card_view">
+					<div class="row" ng-repeat="x in contacts">
+						<div class="col-lg-4" ng-repeat="y in x.Contact">
+						  <div class="card">
+							<div class="card-block">
+							  <span style="color:red; font-weight:bold; float:right" ng-click="removeItem($index)">X</span><br/>
+							  <hr/>
+							  <h4 class="card-title" style="text-align:center"><u>{{y.CompanyName}}</u></h4>
+							  <p class="card-text"><b>Contact Name:</b> {{y.ContactName}}</p>
+							  <p class="card-text"><b>Contact Title:</b> {{y.ContactTitle}}</p>
+							  <p class="card-text"><b>Address:</b> {{y.Address}}</p>
+							  <p class="card-text"><b>City:</b> {{y.City}}</p>
+							  <p class="card-text"><b>Email:</b> {{y.Email}}</p>
+							  <p class="card-text"><b>Postal Code:</b> {{y.PostalCode}}</p>
+							  <p class="card-text"><b>Country:</b> {{y.Country}}</p>
+							  <p class="card-text"><b>Phone:</b> {{y.Phone}}</p>
+							  <p class="card-text"><b>Fax:</b> {{y.Fax}}</p>
+							</div>
+						  </div>
+						</div>	
+					</div>
+				</div>
+			</div>
+		  
+		   <!-- Modal -->
+			<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+			
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Add New Contact</h4>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-sm-12 col-md-12 col-lg-12">
+								<input ng-model="custID" class="form-control" placeholder="Company ID">
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<input ng-model="compName" class="form-control col-sm-6 col-md-6 col-lg-6" placeholder="Company Name">
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<input ng-model="conName" class="form-control col-sm-6 col-md-6 col-lg-6" placeholder="Contact Name">
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<input ng-model="conTitle" class="form-control col-sm-6 col-md-6 col-lg-6" placeholder="Contact Title">
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<input ng-model="address" class="form-control col-sm-6 col-md-6 col-lg-6" placeholder="Address">
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<input ng-model="city" class="form-control col-sm-6 col-md-6 col-lg-6" placeholder="City">
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<input ng-model="email" class="form-control col-sm-6 col-md-6 col-lg-6" placeholder="Email">
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<input ng-model="postCode" class="form-control col-sm-6 col-md-6 col-lg-6" placeholder="Postal Code">
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<input ng-model="country" class="form-control col-sm-6 col-md-6 col-lg-6" placeholder="Country">
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<input ng-model="phone" class="form-control col-sm-6 col-md-6 col-lg-6" placeholder="Phone">
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-6">
+								<input ng-model="fax" class="form-control col-sm-6 col-md-6 col-lg-6" placeholder="Fax">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" ng-click="addContact()" >Add Contact</button>
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			  </div>
+			  
+			</div>
+		</div>
+		  
+		</div>
+	</body>
+	
+</html>
